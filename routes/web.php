@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\dashboardController;
+use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,8 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function(){
-        Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [dashboardController::class, 'index'])->name('home');
+        Route::resource('portfolio', PortfolioController::class);
     });
 
 
