@@ -16,9 +16,18 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        return view('admin.portfolio.index');
+        $portfolios = Portfolio::paginate(8);
+        $direction = 'desc';
+        return view('admin.portfolio.index', compact('portfolios', 'direction'));
     }
 
+    public function orderby($column, $direction)
+    {
+        $direction = $direction === 'desc' ? 'asc' : 'desc';
+        $portfolios = Portfolio::orderby($column, $direction)->paginate(8);
+
+        return view('admin.portfolio.index', compact('portfolios', 'direction'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +35,7 @@ class PortfolioController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.portfolio.create');
     }
 
     /**
@@ -37,7 +46,15 @@ class PortfolioController extends Controller
      */
     public function store(StorePortfolioRequest $request)
     {
-        //
+        $portfolio_data = $request->all();
+        $portfolio_data['slug'] = Portfolio::generateSlug($portfolio_data('title'));
+
+        $new_portfolio = new Portfolio();
+        $new_portfolio->fill($portfolio_data);
+
+        $new_portfolio->save();
+
+        return redirect()->route('admin.portfolio.show', $new_portfolio);
     }
 
     /**
@@ -48,7 +65,7 @@ class PortfolioController extends Controller
      */
     public function show(Portfolio $portfolio)
     {
-        //
+        return view('admin.portfolio.show', compact('portfolio'));
     }
 
     /**

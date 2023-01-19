@@ -1,6 +1,11 @@
 @import '~bootstrap/scss/bootstrap';
 
-.main-high{
+main{
+  overflow: auto;
+}
+
+.main-high,
+main{
   height: calc(100vh - 56px);
 }
 

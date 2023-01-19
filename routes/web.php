@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\dashboardController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Portfolio;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,8 +26,8 @@ Route::middleware(['auth', 'verified'])
     ->group(function(){
         Route::get('/', [dashboardController::class, 'index'])->name('home');
         Route::resource('portfolio', PortfolioController::class);
+        Route::get('portfolios/orderby/{column}/{direction}', [PortfolioController::class, 'orderby'])->name('portfolios.orderby');
     });
-
 
 
 Route::middleware('auth')->group(function () {

@@ -13,7 +13,7 @@ class StorePortfolioRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class StorePortfolioRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255|min:3',
+            'date' => 'required',
+            'image' => 'required',
+            'text' => 'required',
+
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'title.required' => 'titolo obbligatorio',
+            'title.max' => 'max caratteri :max',
+            'title.min' => 'min caratteri :min',
+            'date.required' => 'inserisci una data',
+            'image.required' => 'inserisci un\'immagine',
+            'text.required' => 'testo mancante',
         ];
     }
 }
