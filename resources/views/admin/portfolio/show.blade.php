@@ -5,13 +5,19 @@
 @endsection
 
 @section('content')
-<div class="container">
-  <h1>{{$portfolio->title}}</h1>
+<div class="container text-center">
+  <h1 class="my-3">{{$portfolio->title}}</h1>
   <span>{{date_format(date_create($portfolio->date),'d/m/Y')}}</span>
-  <img src="{{$portfolio->image}}" alt="">
+  <img class="d-block m-auto my-3" src="{{$portfolio->image}}" alt="">
   <p>{!!$portfolio->text!!}</p>
 
   <a class="btn btn-dark" href="{{route('admin.portfolio.index')}}">torna alla Dashboard</a>
+
+
+  @if (session('message'))
+
+    <div class="alert-success" role="alert">{{session('message')}}</div>
+  @endif
 </div>
     
 @endsection

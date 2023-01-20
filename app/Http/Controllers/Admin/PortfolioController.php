@@ -47,14 +47,16 @@ class PortfolioController extends Controller
     public function store(StorePortfolioRequest $request)
     {
         $portfolio_data = $request->all();
-        $portfolio_data['slug'] = Portfolio::generateSlug($portfolio_data('title'));
+        $portfolio_data['slug'] = Portfolio::generateSlug($portfolio_data['title']);
 
+
+        //dd($portfolio_data);
         $new_portfolio = new Portfolio();
         $new_portfolio->fill($portfolio_data);
 
         $new_portfolio->save();
 
-        return redirect()->route('admin.portfolio.show', $new_portfolio);
+        return redirect()->route('admin.portfolio.show', $new_portfolio)->with('message', 'File aggiunto correttamente');
     }
 
     /**

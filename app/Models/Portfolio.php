@@ -10,20 +10,20 @@ class Portfolio extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'text', 'date'];
+    protected $fillable = ['title', 'image', 'text', 'date', 'slug'];
 
-    public static function generateSlug($string){
+    public static function generateSlug($string)
+    {
         $slug = Str::slug($string, '-');
-        
+
         $original_slug = $slug;
         $c = 1;
         $exists = Portfolio::where('slug', $slug)->first();
-        while($exists){
+        while ($exists) {
             $slug = $original_slug . '-' . $c;
             $exists = Portfolio::where('slug', $slug)->first();
             $c++;
         }
         return $slug;
-
     }
 }

@@ -11,9 +11,9 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col"> <a href="{{route('admin.portfolio.orderby', ['id', $direction])}}">Id</a></th>
-        <th scope="col"> <a href="{{route('admin.portfolio.orderby', ['titolo', $direction])}}">Titolo</a></th>
-        <th scope="col"> <a href="{{route('admin.portfolio.orderby', ['date', $direction])}}">Data</a></th>
+        <th scope="col"> <a href="{{route('admin.portfolios.orderby', ['id', $direction])}}">Id</a></th>
+        <th scope="col"> <a href="{{route('admin.portfolios.orderby', ['titolo', $direction])}}">Titolo</a></th>
+        <th scope="col"> <a href="{{route('admin.portfolios.orderby', ['date', $direction])}}">Data</a></th>
         
       </tr>
     </thead>
