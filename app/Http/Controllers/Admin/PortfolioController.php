@@ -78,7 +78,7 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
-        //
+        return view('admin.portfolio.edit', compact('portfolio'));
     }
 
     /**

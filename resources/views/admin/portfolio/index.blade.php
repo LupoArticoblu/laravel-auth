@@ -24,6 +24,7 @@
         <td>{{$portfolio->title}}</td>
         <td>{{date_format(date_create($portfolio->date), 'Y-m-d')}}</td>
         <td> <a class="btn btn-danger" href="{{route('admin.portfolio.show', $portfolio)}}">SHOW</a></td>
+        <td> <a class="btn btn-primary" href="{{route('admin.portfolio.edit', $portfolio)}}">EDIT</a></td>
       </tr>  
       @endforeach
     </tbody>

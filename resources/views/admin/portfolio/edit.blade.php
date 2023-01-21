@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-    | Inserisci nuovo
+    | Edita file
 @endsection
 
 @section('content')
 <div class="container">
   <h1>Aggiungi file</h1>
 
-  <form action="{{route('admin.portfolio.store', $portfolio)}}" method="POST">
+  <form action="{{route('admin.portfolio.update', $portfolio)}}" method="POST">
     @csrf
     @method('PUT')
     <div class="mb-3">
