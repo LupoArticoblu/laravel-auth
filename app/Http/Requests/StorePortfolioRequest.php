@@ -26,7 +26,8 @@ class StorePortfolioRequest extends FormRequest
         return [
             'title' => 'required|max:255|min:3',
             'date' => 'required',
-            'image' => 'required',
+            //la grandezza massima di un immagine in questo caso si misura in bit
+            'image' => 'nullable|image|max:64000',
             'text' => 'required',
 
         ];
@@ -39,8 +40,9 @@ class StorePortfolioRequest extends FormRequest
             'title.max' => 'max caratteri :max',
             'title.min' => 'min caratteri :min',
             'date.required' => 'inserisci una data',
-            'image.required' => 'inserisci un\'immagine',
             'text.required' => 'testo mancante',
+            'image.image' => 'file incorretto',
+            'image.max' => 'file troppo grande, massimo 6 Mb'
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PortfolioController extends Controller
 {
@@ -16,7 +17,12 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        $portfolios = Portfolio::paginate(8);
+        if(isset($_GET['search'])){
+            $search = $_GET['search'];
+            $portfolios = Portfolio::orderby('title','like',"%$search%")->paginate(8);
+        }else{
+            $portfolios = Portfolio::orderby('id', 'desc')->paginate(8);
+        }
         $direction = 'desc';
         return view('admin.portfolio.index', compact('portfolios', 'direction'));
     }
@@ -48,6 +54,14 @@ class PortfolioController extends Controller
     {
         $portfolio_data = $request->all();
         $portfolio_data['slug'] = Portfolio::generateSlug($portfolio_data['title']);
+
+
+        if (array_key_exists('image', $portfolio_data)) {
+            
+            $portfolio_data['original_name'] = $request->file('image')->getClientOriginalName();
+
+            $portfolio_data['image'] = Storage::put('upload', $portfolio_data['image']);
+        }
 
 
         //dd($portfolio_data);
@@ -90,9 +104,26 @@ class PortfolioController extends Controller
      */
     public function update(UpdatePortfolioRequest $request, Portfolio $portfolio)
     {
-        //
-    }
+        $portfolio_data = $request->all();
+        if($portfolio_data['title'] != $portfolio->title){
+            $portfolio_data['slug'] = Portfolio::generateSlug($portfolio_data['title']);
+        }else{
+            $portfolio_data['slug'] = $portfolio->slug;
+        }
 
+        if (array_key_exists('image', $portfolio_data)) {
+            if ($portfolio->image) {
+                Storage::disk('public')->delete($portfolio->image);
+            }
+            $portfolio_data['original_name'] = $request->file('image')->getClientOriginalName();
+
+            $portfolio_data['image'] = Storage::put('upload', $portfolio_data['image']);
+        }
+        $portfolio->update($portfolio_data);
+
+        return redirect()->route('admin.portfolio.show', $portfolio)->with('message', 'File aggiornato correttamente');
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -101,6 +132,12 @@ class PortfolioController extends Controller
      */
     public function destroy(Portfolio $portfolio)
     {
-        //
+        if ($portfolio->image) {
+            Storage::disk('public')->delete($portfolio->image);
+        }
+        $portfolio->delete;
+        
+        return redirect()->route('admin.portfolio.index')->with('deleted', 'File eliminato');
+
     }
 }

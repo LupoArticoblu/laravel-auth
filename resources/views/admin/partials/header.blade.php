@@ -32,6 +32,13 @@
               </li>
               @endif
               @else
+
+              <form action="{{ route('admin.post.index') }}" method="GET">
+                @csrf
+                <input type="form-control d-inline-block w-50" name="text" type="text" placeholder="search">
+                <button class="btn btn-close-white" type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+              </form>
+
               <li class="nav-item">
                 <a class="btn btn-dark" href="{{ route('logout') }}" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();">

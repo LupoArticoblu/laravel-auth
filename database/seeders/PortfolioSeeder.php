@@ -21,7 +21,6 @@ class PortfolioSeeder extends Seeder
         $new_post->title = $faker->sentence();
         $new_post->slug = Portfolio::generateSlug($new_post->title);
         $new_post->date = date('Y-m-d');
-        $new_post->image = $faker->imageUrl(640, 480, 'animals', true);
         $new_post->text = $faker->paragraph(9);
         $new_post->save();
        }

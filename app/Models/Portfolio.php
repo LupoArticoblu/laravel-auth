@@ -10,7 +10,7 @@ class Portfolio extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'text', 'date', 'slug'];
+    protected $fillable = ['title', 'image', 'text', 'date', 'slug', 'image_original_name'];
 
     public static function generateSlug($string)
     {
